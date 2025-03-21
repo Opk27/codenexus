@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chatbot</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        #chatbox {
+            height: 450px;
+            
+            overflow-y: auto;
+            border: 2px solid #ccc;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        .message {
+            margin-bottom: 10px;
+        }
+        .user-message {
+            text-align: right;
+        }
+        .bot-message {
+            text-align: left;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+    <div class="bg-white shadow-md rounded-lg p-6 w-96">
+        <h1 class="text-xl font-bold mb-4">AI Chatbot</h1>
+        <div id="chatbox"></div>
+        <div class="flex">
+            <input type="text" id="userInput" placeholder="Type your message..." class="flex-1 border border-gray-300 rounded-lg p-2 mr-2">
+            <button onclick="sendMessage()" class="bg-blue-500 text-white rounded-lg px-4">Send</button>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const userMessage = input.value.trim().toLowerCase();  
+    
+            if (userMessage !== "") {
+                displayMessage(userMessage, 'user');
+                input.value = '';  
+    
+                setTimeout(() => {
+                    const botResponse = getBotResponse(userMessage);
+                    displayMessage(botResponse, 'bot');
+                }, 1000);
+            }
+        }
+    
+        function displayMessage(message, sender) {
+            const chatbox = document.getElementById('chatbox');
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', sender === 'user' ? 'user-message' : 'bot-message');
+            messageDiv.textContent = sender === 'user' ? `You: ${message}` : `Bot: ${message}`;
+            chatbox.appendChild(messageDiv);
+            chatbox.scrollTop = chatbox.scrollHeight;  
+        }
+    
+        function getBotResponse(userMessage) {
+            const responses = {
+                "hi":"Hello !!! welcome ",
+                "hello": "Hi there! How can I help you today?",
+                "gdp ?": "Here are some insights I'm having about GDP.",
+                "how are you?": "I'm just a bot, but thanks for asking!",
+                "what is your name?": "I'm an AI chatbot created to assist you.",
+                "bye": "Goodbye! Have a great day!",
+                "what is gdp?": "GDP (Gross Domestic Product) is the total monetary or market value of all the finished goods and services produced within a country's borders in a specific time period.",
+                "current gdp": "The current GDP of India is approximately $3.4 trillion, based on the latest estimates for 2024.",
+                "what is cpi?": "CPI (Consumer Price Index) measures the average change over time in the prices paid by consumers for a basket of goods and services. It's used to gauge inflation.",
+                "current cpi": "As of the latest update, the CPI for India stands at 6.6%, indicating moderate inflation.",
+                "inflation rate": "The current inflation rate is approximately 6.6%, according to the latest data.",
+                "current stock market trends": "The stock market has shown a mixed performance today, with major indices experiencing moderate volatility. Would you like more details on specific stocks?",
+                "what is fiscal policy?": "Fiscal policy involves the use of government spending and tax policies to influence a country's economy. It's aimed at promoting economic growth and stability.",
+                "interest rates": "The current interest rate set by the Reserve Bank of India is 6.5%, which influences lending and borrowing costs across the economy.",
+                "budget 2024 india": "The 2024 Indian budget focuses on increasing public investments in infrastructure, education, and healthcare, while aiming for fiscal consolidation.",
+                "gdp growth rate": "India's GDP growth rate for 2024 is estimated at 5.6%, reflecting a recovery in various sectors after the pandemic.",
+                "stock market forecast": "The stock market is expected to remain volatile in the short term, but long-term prospects look promising as the economy rebounds.",
+                "global recession": "The possibility of a global recession remains a concern, with many countries experiencing slow economic growth and high inflation. However, some regions are showing resilience.",
+                "foreign exchange rate": "The current exchange rate for 1 USD to INR is approximately 83.50. It fluctuates based on global economic conditions.",
+                "cryptocurrency update": "Cryptocurrency markets are currently experiencing high volatility. Bitcoin is trading at around $30,000, while Ethereum is at $1,900.",
+                "economic recovery": "The Indian economy is showing signs of recovery, driven by increased consumer spending and industrial output, despite challenges like inflation and high energy prices."
+            };
+    
+            return responses[userMessage] || "I'm sorry, I don't understand that. Could you please rephrase?";
+        }
+    </script>
+    
+</body>
+</html>
